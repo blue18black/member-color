@@ -274,6 +274,11 @@ const groups = {
             color:"わからない",
             image:"images/beyo_otsubo.webp"
         },
+        {
+            name:"杉山結菜",
+            color:"わからない",
+            image:"images/beyo_sugiyama.webp"
+        },
     ],
     ocha: [
         {
