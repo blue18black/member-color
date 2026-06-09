@@ -374,7 +374,7 @@ const groupNames = {
     beyo:"BEYOOOOONDS",
     ocha:"OCHA NORMA",
     rosy:"ロージークロニクル",
-    all:"全グループ混合"
+    // all:"全グループ混合"
 };
 const groupInfo = {
 
@@ -576,6 +576,8 @@ function startQuiz(){
 
     canAnswer = true;
 
+    document.getElementById("skipBtn").disabled = false;
+    document.getElementById("homeBtn").disabled = false;
     createColorButtons();
 
     showScreen("quizScreen");
@@ -755,6 +757,9 @@ function nextQuestion(){
     document
         .getElementById("skipBtn")
         .disabled = false;
+    document
+        .getElementById("homeBtn")
+        .disabled = false;
 }
 
 function showOverlay(text,isCorrect,colorName){
@@ -800,8 +805,10 @@ function showOverlay(text,isCorrect,colorName){
 
     }else{
 
+        // overlay.style.border =
+        //     "6px solid #005eb8";
         overlay.style.border =
-            "6px solid #005eb8";
+                `6px solid ${colorData.code}`;
 
     }
 
@@ -815,6 +822,9 @@ function showOverlay(text,isCorrect,colorName){
 
     document
         .getElementById("skipBtn")
+        .disabled = true;
+    document
+        .getElementById("homeBtn")
         .disabled = true;
 }
 
