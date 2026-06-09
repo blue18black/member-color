@@ -262,6 +262,13 @@ button{
     background:white !important;
     filter:none !important;
 }
+#homeBtn:disabled{
+    pointer-events:none;
+    opacity:1 !important;
+    color:black !important;
+    background:white !important;
+    filter:none !important;
+}
 .menu-btn{
     background:white;
 
@@ -277,6 +284,8 @@ button{
     cursor:pointer;
 
     transition:.15s;
+
+    margin-top: 10px;
 }
 
 .menu-btn:hover{
