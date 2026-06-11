@@ -46,6 +46,11 @@ const groups = {
             image:"images/morning_sugihara.webp"
         },
         {
+            name:"安田美結",
+            color:"わからない",
+            image:"images/morning_yasuda.webp"
+        },
+        {
             name:"鈴木もあ",
             color:"わからない",
             image:"images/morning_suzuki.webp"
