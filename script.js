@@ -432,6 +432,7 @@ const colors = [
     // {name:"ピュアレッド", code:"#db0025"},//げったー
     {name:"ライトレッド", code:"#e70033"},//
     {name:"ピュアレッド", code:"#e70033"},//
+    {name:"レッド", code:"#e70033"},//
     {name:"イタリアンレッド", code:"#e70033"},//
     {name:"オレンジ", code:"#fc4c02"},
     {name:"イエロー", code:"#f7ea48"},
