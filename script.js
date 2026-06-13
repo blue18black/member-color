@@ -271,17 +271,17 @@ const groups = {
         },
         {
             name:"小島はな",
-            color:"わからない",
+            color:"ホワイト",
             image:"images/beyo_kojima.webp"
         },
         {
             name:"大坪茉乃",
-            color:"わからない",
+            color:"ライトグリーン",
             image:"images/beyo_otsubo.webp"
         },
         {
             name:"杉山結菜",
-            color:"わからない",
+            color:"レッド",
             image:"images/beyo_sugiyama.webp"
         },
     ],
@@ -386,43 +386,43 @@ const groupNames = {
     rosy:"ロージークロニクル",
     // all:"全グループ混合"
 };
-const groupInfo = {
+// const groupInfo = {
 
-    morning:{
-        name:"モーニング娘。'26",
-        color:"#ff69b4"
-    },
+//     morning:{
+//         name:"モーニング娘。'26",
+//         color:"#ff69b4"
+//     },
 
-    ange:{
-        name:"アンジュルム",
-        color:"#ff0000"
-    },
+//     ange:{
+//         name:"アンジュルム",
+//         color:"#ff0000"
+//     },
 
-    juice:{
-        name:"Juice=Juice",
-        color:"#0033a0"
-    },
+//     juice:{
+//         name:"Juice=Juice",
+//         color:"#0033a0"
+//     },
 
-    tsubaki:{
-        name:"つばきファクトリー",
-        color:"#00b140"
-    },
+//     tsubaki:{
+//         name:"つばきファクトリー",
+//         color:"#00b140"
+//     },
 
-    beyo:{
-        name:"BEYOOOOONDS",
-        color:"#ff9900"
-    },
+//     beyo:{
+//         name:"BEYOOOOONDS",
+//         color:"#ff9900"
+//     },
 
-    ocha:{
-        name:"OCHA NORMA",
-        color:"#59cbe8"
-    },
+//     ocha:{
+//         name:"OCHA NORMA",
+//         color:"#59cbe8"
+//     },
 
-    rosy:{
-        name:"ロージークロニクル",
-        color:"#c1a7e2"
-    }
-};
+//     rosy:{
+//         name:"ロージークロニクル",
+//         color:"#c1a7e2"
+//     }
+// };
 
 const colors = [
     {name:"ライトピンク", code:"#f2d4d7"},
