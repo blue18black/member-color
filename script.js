@@ -10,11 +10,11 @@ const groups = {
             color:"ラベンダー",
             image:"images/morning_oda.webp"
         },
-        {
-            name:"牧野真莉愛",
-            color:"ピンク",
-            image:"images/morning_makino.webp"
-        },
+        // {
+        //     name:"牧野真莉愛",
+        //     color:"ピンク",
+        //     image:"images/morning_makino.webp"
+        // },
         {
             name:"岡村ほまれ",
             color:"デイジー",
@@ -234,11 +234,11 @@ const groups = {
             color:"デイジー",
             image:"images/beyo_eguchi.webp"
         },
-        {
-            name:"高瀬くるみ",
-            color:"ミントグリーン",
-            image:"images/beyo_takase.webp"
-        },
+        // {
+        //     name:"高瀬くるみ",
+        //     color:"ミントグリーン",
+        //     image:"images/beyo_takase.webp"
+        // },
         {
             name:"前田こころ",
             color:"シーブルー",
