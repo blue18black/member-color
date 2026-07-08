@@ -22,7 +22,7 @@ const groups = {
         },
         {
             name:"山﨑愛生",
-            color:"ブライトグリーン",
+            color:"ブルー",
             image:"images/morning_yamazaki.webp"
         },
         {
@@ -42,22 +42,22 @@ const groups = {
         },
         {
             name:"杉原明紗",
-            color:"わからない",
+            color:"ライトブルー",
             image:"images/morning_sugihara.webp"
         },
         {
             name:"安田美結",
-            color:"わからない",
+            color:"グリーン",
             image:"images/morning_yasuda.webp"
         },
         {
             name:"鈴木もあ",
-            color:"わからない",
+            color:"ホットピンク",
             image:"images/morning_suzuki.webp"
         },
         {
             name:"石川華望",
-            color:"わからない",
+            color:"オレンジ",
             image:"images/morning_ishikawa.webp"
         },
     ],
