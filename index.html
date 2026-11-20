@@ -9,63 +9,9 @@
 <body>
 <div id="homeScreen" class="screen">
     <h1>ハロー！プロジェクト<br>メンバーカラークイズ</h1>
-    <div id="groupCarousel">
-        <div class="group-card"
-            onclick="selectGroup('morning')">
-            <img src="images/group_morning.webp">
-            <h2>モーニング娘。'26</h2>
-        </div>
-        <div class="group-card"
-            onclick="selectGroup('ange')">
-            <img src="images/group_ange.webp">
-            <h2>アンジュルム</h2>
-        </div>
-        <div class="group-card"
-            onclick="selectGroup('juice')">
-            <img src="images/group_juice.webp">
-            <h2>Juice=Juice</h2>
-        </div>
-        <div class="group-card"
-            onclick="selectGroup('tsubaki')">
-            <img src="images/group_tsubaki.webp">
-            <h2>つばきファクトリー</h2>
-        </div>
-        <div class="group-card"
-            onclick="selectGroup('beyo')">
-            <img src="images/group_beyo.webp">
-            <h2>BEYOOOOONDS</h2>
-        </div>
-        <div class="group-card"
-            onclick="selectGroup('ocha')">
-            <img src="images/group_ocha.webp">
-            <h2>OCHA NORMA</h2>
-        </div>
-        <div class="group-card"
-            onclick="selectGroup('rosy')">
-            <img src="images/group_rosy.webp">
-            <h2>ロージークロニクル</h2>
-        </div>
-        <!-- <div class="group-card"
-            onclick="selectGroup('all')">
-            <img src="images/group_all.webp">
-            <h2>全グループ混合</h2>
-        </div> -->
-    </div>
+    <!-- グループカードは data/members.json から script.js が生成する -->
+    <div id="groupCarousel"></div>
 </div>
-<!-- <div id="homeScreen" class="screen">
-    <h1>ハロプロメンバーカラークイズ</h1>
-
-    <div class="group-list">
-        <button onclick="selectGroup('morning')">モーニング娘。'26</button>
-        <button onclick="selectGroup('ange')">アンジュルム</button>
-        <button onclick="selectGroup('juice')">Juice=Juice</button>
-        <button onclick="selectGroup('tsubaki')">つばきファクトリー</button>
-        <button onclick="selectGroup('beyo')">BEYOOOOONDS</button>
-        <button onclick="selectGroup('ocha')">OCHA NORMA</button>
-        <button onclick="selectGroup('rosy')">ロージークロニクル</button>
-        <button onclick="selectGroup('all')">全グループ混合</button>
-    </div>
-</div> -->
 <div id="startScreen" class="screen hidden">
 
     <h2 id="groupTitle"></h2>
@@ -80,16 +26,9 @@
 
     <p id="questionCount"></p>
 
-    <button class="menu-btn" onclick="startQuiz()">スタート</button>
+    <button class="menu-btn primary" onclick="startQuiz()">スタート</button>
     <button class="menu-btn" onclick="goHome()">ホームへ</button>
 </div>
-<!-- <div id="startScreen" class="screen hidden">
-    <h2 id="groupTitle"></h2>
-    <p id="questionCount"></p>
-
-    <button onclick="startQuiz()">スタート</button>
-    <button onclick="goHome()">ホームへ</button>
-</div> -->
 
 <div id="quizScreen" class="screen hidden">
 
@@ -111,12 +50,9 @@
     <h2>結果</h2>
 
     <p id="scoreText"></p>
-    <button class="menu-btn" onclick="startQuiz()">もう一度挑戦</button>
+    <button class="menu-btn primary" onclick="startQuiz()">もう一度挑戦</button>
     <button class="menu-btn" onclick="goHome()">ホームへ</button>
     <div id="mistakes"></div>
-
-    
-
 </div>
 
 <div id="overlay" class="hidden"></div>

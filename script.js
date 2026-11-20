@@ -1,543 +1,250 @@
-const groups = {
-    morning: [
-        {
-            name:"野中美希",
-            color:"パープル",
-            image:"images/morning_nonaka.webp"
-        },
-        {
-            name:"小田さくら",
-            color:"ラベンダー",
-            image:"images/morning_oda.webp"
-        },
-        // {
-        //     name:"牧野真莉愛",
-        //     color:"ピンク",
-        //     image:"images/morning_makino.webp"
-        // },
-        {
-            name:"岡村ほまれ",
-            color:"デイジー",
-            image:"images/morning_okamura.webp"
-        },
-        {
-            name:"山﨑愛生",
-            color:"ブルー",
-            image:"images/morning_yamazaki.webp"
-        },
-        {
-            name:"櫻井梨央",
-            color:"ミルクティー",
-            image:"images/morning_sakurai.webp"
-        },
-        {
-            name:"井上春華",
-            color:"ミントグリーン",
-            image:"images/morning_inoue.webp"
-        },
-        {
-            name:"弓桁朱琴",
-            color:"ピュアレッド",
-            image:"images/morning_yumigeta.webp"
-        },
-        {
-            name:"杉原明紗",
-            color:"ライトブルー",
-            image:"images/morning_sugihara.webp"
-        },
-        {
-            name:"安田美結",
-            color:"グリーン",
-            image:"images/morning_yasuda.webp"
-        },
-        {
-            name:"鈴木もあ",
-            color:"ホットピンク",
-            image:"images/morning_suzuki.webp"
-        },
-        {
-            name:"石川華望",
-            color:"オレンジ",
-            image:"images/morning_ishikawa.webp"
-        },
-    ],
-    ange: [
-        {
-            name:"伊勢鈴蘭",
-            color:"オレンジ",
-            image:"images/ange_ise.webp"
-        },
-        {
-            name:"為永幸音",
-            color:"ピンク",
-            image:"images/ange_tamenaga.webp"
-        },
-        {
-            name:"橋迫鈴",
-            color:"ピュアレッド",
-            image:"images/ange_hashisako.webp"
-        },
-        {
-            name:"川名凜",
-            color:"グリーン",
-            image:"images/ange_kawana.webp"
-        },
-        {
-            name:"松本わかな",
-            color:"ホワイト",
-            image:"images/ange_matsumoto.webp"
-        },
-        {
-            name:"平山遊季",
-            color:"ライトグリーン",
-            image:"images/ange_hirayama.webp"
-        },
-        {
-            name:"下井谷幸穂",
-            color:"ホットピンク",
-            image:"images/ange_shimoitani.webp"
-        },
-        {
-            name:"後藤花",
-            color:"シーブルー",
-            image:"images/ange_goto.webp"
-        },
-        {
-            name:"長野桃羽",
-            color:"イエロー",
-            image:"images/ange_nagano.webp"
-        },
-    ],
-    juice: [
-        {
-            name:"段原瑠々",
-            color:"オレンジ",
-            image:"images/juice_dambara.webp"
-        },
-        {
-            name:"井上玲音",
-            color:"ホワイト",
-            image:"images/juice_inoue.webp"
-        },
-        {
-            name:"工藤由愛",
-            color:"ピンク",
-            image:"images/juice_kudou.webp"
-        },
-        {
-            name:"松永里愛",
-            color:"ロイヤルブルー",
-            image:"images/juice_matsunaga.webp"
-        },
-        {
-            name:"有澤一華",
-            color:"ライトブルー",
-            image:"images/juice_arisawa.webp"
-        },
-        {
-            name:"入江里咲",
-            color:"ライトパープル",
-            image:"images/juice_irie.webp"
-        },
-        {
-            name:"江端妃咲",
-            color:"デイジー",
-            image:"images/juice_ebata.webp"
-        },
-        {
-            name:"石山咲良",
-            color:"パープル",
-            image:"images/juice_ishiyama.webp"
-        },
-        {
-            name:"遠藤彩加里",
-            color:"ミントグリーン",
-            image:"images/juice_endo.webp"
-        },
-        {
-            name:"川嶋美楓",
-            color:"ピュアレッド",
-            image:"images/juice_kawashima.webp"
-        },
-        {
-            name:"林仁愛",
-            color:"ブライトグリーン",
-            image:"images/juice_hayashi.webp"
-        },
-    ],
+// メンバー情報は data/members.json から読み込む。
+// このファイルは GitHub Actions が公式サイトから毎日自動で更新する
+// (scripts/update-members.mjs)。手作業での更新は不要。
 
-    tsubaki: [
-        {
-            name:"谷本安美",
-            color:"ライトパープル",
-            image:"images/tsubaki_tanimoto.webp"
-        },
-        {
-            name:"小野瑞歩",
-            color:"エメラルドグリーン",
-            image:"images/tsubaki_ono.webp"
-        },
-        {
-            name:"小野田紗栞",
-            color:"ピーチ",
-            image:"images/tsubaki_onoda.webp"
-        },
-        {
-            name:"秋山眞緒",
-            color:"ライトレッド",
-            image:"images/tsubaki_akiyama.webp"
-        },
-        {
-            name:"河西結心",
-            color:"パープル",
-            image:"images/tsubaki_kasai.webp"
-        },
-        {
-            name:"福田真琳",
-            color:"ロイヤルブルー",
-            image:"images/tsubaki_fukuda.webp"
-        },
-        {
-            name:"豫風瑠乃",
-            color:"マスタード",
-            image:"images/tsubaki_yofu.webp"
-        },
-        {
-            name:"石井泉羽",
-            color:"ホワイト",
-            image:"images/tsubaki_ishii.webp"
-        },
-        {
-            name:"村田結生",
-            color:"ライトピンク",
-            image:"images/tsubaki_murata.webp"
-        },
-        {
-            name:"土居楓奏",
-            color:"ブライトグリーン",
-            image:"images/tsubaki_doi.webp"
-        },
-        {
-            name:"西村乙輝",
-            color:"イエロー",
-            image:"images/tsubaki_nishimura.webp"
-        },
-    ],
-    beyo: [
-        {
-            name:"西田汐里",
-            color:"ホットピンク",
-            image:"images/beyo_nishida.webp"
-        },
-        {
-            name:"江口紗耶",
-            color:"デイジー",
-            image:"images/beyo_eguchi.webp"
-        },
-        // {
-        //     name:"高瀬くるみ",
-        //     color:"ミントグリーン",
-        //     image:"images/beyo_takase.webp"
-        // },
-        {
-            name:"前田こころ",
-            color:"シーブルー",
-            image:"images/beyo_maeda.webp"
-        },
-        {
-            name:"岡村美波",
-            color:"ピンク",
-            image:"images/beyo_okamura.webp"
-        },
-        {
-            name:"清野桃々姫",
-            color:"オレンジ",
-            image:"images/beyo_kiyono.webp"
-        },
-        {
-            name:"平井美葉",
-            color:"パープル",
-            image:"images/beyo_hirai.webp"
-        },
-        {
-            name:"小林萌花",
-            color:"グリーン",
-            image:"images/beyo_kobayashi.webp"
-        },
-        {
-            name:"里吉うたの",
-            color:"ミディアムブルー",
-            image:"images/beyo_satoyoshi.webp"
-        },
-        {
-            name:"小島はな",
-            color:"ホワイト",
-            image:"images/beyo_kojima.webp"
-        },
-        {
-            name:"大坪茉乃",
-            color:"ライトグリーン",
-            image:"images/beyo_otsubo.webp"
-        },
-        {
-            name:"杉山結菜",
-            color:"レッド",
-            image:"images/beyo_sugiyama.webp"
-        },
-    ],
-    ocha: [
-        {
-            name:"斉藤円香",
-            color:"シーブルー",
-            image:"images/ocha_saito.webp"
-        },
-        {
-            name:"広本瑠璃",
-            color:"イエロー",
-            image:"images/ocha_hiromoto.webp"
-        },
-        {
-            name:"米村姫良々",
-            color:"イタリアンレッド",
-            image:"images/ocha_yonemura.webp"
-        },
-        {
-            name:"窪田七海",
-            color:"ピンク",
-            image:"images/ocha_kubota.webp"
-        },
-        {
-            name:"中山夏月姫",
-            color:"ホワイト",
-            image:"images/ocha_nakayama.webp"
-        },
-        {
-            name:"西﨑美空",
-            color:"パープル",
-            image:"images/ocha_nishizaki.webp"
-        },
-        {
-            name:"北原もも",
-            color:"ライトグリーン",
-            image:"images/ocha_kitahara.webp"
-        },
-        {
-            name:"筒井澪心",
-            color:"ロイヤルブルー",
-            image:"images/ocha_tsutsui.webp"
-        },
-    ],
-    rosy: [
-        {
-            name:"橋田歩果",
-            color:"ホワイト",
-            image:"images/rosy_hashida.webp"
-        },
-        {
-            name:"吉田姫杷",
-            color:"ピュアレッド",
-            image:"images/rosy_yoshida.webp"
-        },
-        {
-            name:"小野田華凜",
-            color:"ピンク",
-            image:"images/rosy_onoda.webp"
-        },
-        {
-            name:"村越彩菜",
-            color:"ライトパープル",
-            image:"images/rosy_murakoshi.webp"
-        },
-        {
-            name:"植村葉純",
-            color:"オレンジ",
-            image:"images/rosy_uemura.webp"
-        },
-        {
-            name:"松原ユリヤ",
-            color:"ライトブルー",
-            image:"images/rosy_matsubara.webp"
-        },
-        {
-            name:"島川波菜",
-            color:"ブライトグリーン",
-            image:"images/rosy_shimakawa.webp"
-        },
-        {
-            name:"上村麗菜",
-            color:"イエロー",
-            image:"images/rosy_kamimuara.webp"
-        },
-        {
-            name:"相馬優芽",
-            color:"ブルー",
-            image:"images/rosy_soma.webp"
-        },
-    ],
-};
+let groups = {};      // { morning: [{name, color, code, image}, ...], ... }
+let groupNames = {};  // { morning: "モーニング娘。'26", ... }
+let colors = [];      // 回答ボタン [{name, code}, ...]
+let groupColors = {}; // { morning: {primary, secondary}, ... }
+let themeColor = "#0080cb";   // ハロー！プロジェクトの青 (ボタンなどに使う)
+let themeLight = null;        // ハロプロの薄い青。公式サイトに定義がなければ青を白と混ぜて作る
 
-const groupNames = {
-    morning:"モーニング娘。'26",
-    ange:"アンジュルム",
-    juice:"Juice=Juice",
-    tsubaki:"つばきファクトリー",
-    beyo:"BEYOOOOONDS",
-    ocha:"OCHA NORMA",
-    rosy:"ロージークロニクル",
-    // all:"全グループ混合"
-};
-// const groupInfo = {
-
-//     morning:{
-//         name:"モーニング娘。'26",
-//         color:"#ff69b4"
-//     },
-
-//     ange:{
-//         name:"アンジュルム",
-//         color:"#ff0000"
-//     },
-
-//     juice:{
-//         name:"Juice=Juice",
-//         color:"#0033a0"
-//     },
-
-//     tsubaki:{
-//         name:"つばきファクトリー",
-//         color:"#00b140"
-//     },
-
-//     beyo:{
-//         name:"BEYOOOOONDS",
-//         color:"#ff9900"
-//     },
-
-//     ocha:{
-//         name:"OCHA NORMA",
-//         color:"#59cbe8"
-//     },
-
-//     rosy:{
-//         name:"ロージークロニクル",
-//         color:"#c1a7e2"
-//     }
-// };
-
-const colors = [
-    {name:"ライトピンク", code:"#f2d4d7"},
-    {name:"ピーチ", code:"#f99fc9"},
-    {name:"ピンク", code:"#f57eb6"},
-    {name:"ホットピンク", code:"#da1884"},
-    // {name:"ピュアレッド", code:"#db0025"},//げったー
-    {name:"ライトレッド", code:"#e70033"},//
-    {name:"ピュアレッド", code:"#e70033"},//
-    {name:"レッド", code:"#e70033"},//
-    {name:"イタリアンレッド", code:"#e70033"},//
-    {name:"オレンジ", code:"#fc4c02"},
-    {name:"イエロー", code:"#f7ea48"},
-    {name:"デイジー", code:"#fdda24"},
-    {name:"マスタード", code:"#ffcd00"},
-    {name:"ライトグリーン", code:"#d0df00"},
-    {name:"グリーン", code:"#00b140"},
-    {name:"ブライトグリーン", code:"#00b140"},
-    {name:"ミントグリーン", code:"#00c7b1"},
-    {name:"エメラルドグリーン", code:"#00b2a9"},
-    // {name:"グリーン", code:"#007749"},//ほのぴ
-    {name:"ライトブルー", code:"#b9d9eb"},
-    {name:"シーブルー", code:"#59cbe8"},
-    {name:"ブルー", code:"#005eb8"},//ミディアムブルー
-    {name:"ミディアムブルー", code:"#005eb8"},//ブルー
-    {name:"ロイヤルブルー", code:"#0033a0"},
-    {name:"ライトパープル", code:"#c1a7e2"},
-    {name:"ラベンダー", code:"#a05eb5"},
-    {name:"パープル", code:"#582c83"},
-    {name:"ミルクティー", code:"#d3bba8"},
-    {name:"ホワイト", code:"#ffffff"},
-
-
-
-
-
-    // モーニング
-    // {name:"パープル", code:"#582c83"},
-    // {name:"ラベンダー", code:"#a05eb5"},
-    // {name:"ピンク", code:"#f57eb6"},
-    // {name:"デイジー", code:"#fdda24"},
-    // {name:"ブライトグリーン", code:"#00b140"},
-    // {name:"ミルクティー", code:"#d3bba8"},
-    // {name:"ミントグリーン", code:"#00c7b1"},
-    // {name:"ピュアレッド", code:"#db0025"},//
-
-    // アンジュ
-    // {name:"オレンジ", code:"#fc4c02"},
-    // {name:"ピンク", code:"#f57eb6"},
-    // {name:"ピュアレッド", code:"#e70033"},//
-    // {name:"グリーン", code:"#00b140"},
-    // {name:"ホワイト", code:"#ffffff"},
-    // {name:"ライトグリーン", code:"#d0df00"},
-    // {name:"ホットピンク", code:"#da1884"},
-    // {name:"シーブルー", code:"#59cbe8"},
-    // {name:"イエロー", code:"#f7ea48"},
-
-    // ジュース
-    // {name:"オレンジ", code:"#fc4c02"},
-    // {name:"ホワイト", code:"#ffffff"},
-    // {name:"ピンク", code:"#f57eb6"},
-    // {name:"ロイヤルブルー", code:"#0033a0"},
-    // {name:"ライトブルー", code:"#b9d9eb"},
-    // {name:"ライトパープル", code:"#c1a7e2"},
-    // {name:"デイジー", code:"#fdda24"},
-    // {name:"パープル", code:"#582c83"},
-    // {name:"ミントグリーン", code:"#00c7b1"},
-    // {name:"ピュアレッド", code:"#e70033"},//
-    // {name:"ブライトグリーン", code:"#00b140"},
-
-    // つばき
-    // {name:"ライトパープル", code:"#c1a7e2"},
-    // {name:"エメラルドグリーン", code:"#00b2a9"},
-    // {name:"ピーチ", code:"#f99fc9"},
-    // {name:"ライトレッド", code:"#e70033"},//
-    // {name:"パープル", code:"#582c83"},
-    // {name:"ロイヤルブルー", code:"#0033a0"},
-    // {name:"マスタード", code:"#ffcd00"},
-    // {name:"ホワイト", code:"#ffffff"},
-    // {name:"ライトピンク", code:"#f2d4d7"},
-    // {name:"ブライトグリーン", code:"#00b140"},
-    // {name:"イエロー", code:"#f7ea48"},
-
-    // ビヨ
-    // {name:"ホットピンク", code:"#da1884"},
-    // {name:"デイジー", code:"#fdda24"},
-    // {name:"ミントグリーン", code:"#00c7b1"},
-    // {name:"シーブルー", code:"#59cbe8"},//
-    // {name:"ピンク", code:"#f57eb6"},
-    // {name:"オレンジ", code:"#fc4c02"},
-    // {name:"パープル", code:"#582c83"},
-    // {name:"グリーン", code:"#007749"},
-    // {name:"ミディアムブルー", code:"#005eb8"},//ブルー
-
-    // オチャ
-    // {name:"シーブルー", code:"#59cbe8"},
-    // {name:"イエロー", code:"#f7ea48"},
-    // {name:"イタリアンレッド", code:"#e70033"},//
-    // {name:"ピンク", code:"#f57eb6"},
-    // {name:"ホワイト", code:"#ffffff"},
-    // {name:"パープル", code:"#582c83"},
-    // {name:"ライトグリーン", code:"#d0df00"},
-    // {name:"ロイヤルブルー", code:"#0033a0"},
-
-    // ロージー
-    // {name:"ホワイト", code:"#ffffff"},
-    // {name:"ピュアレッド", code:"#e70033"},//
-    // {name:"ピンク", code:"#f57eb6"},
-    // {name:"ライトパープル", code:"#c1a7e2"},
-    // {name:"オレンジ", code:"#fc4c02"},
-    // {name:"ライトブルー", code:"#b9d9eb"},
-    // {name:"ブライトグリーン", code:"#00b140"},
-    // {name:"イエロー", code:"#f7ea48"},
-    // {name:"ブルー", code:"#005eb8"},//ミディアムブルー
+// 回答ボタンの並び順。ここにない新しい色は色相順で最後に追加される。
+const COLOR_ORDER = [
+    "ライトピンク", "ピーチ", "ピンク", "ホットピンク",
+    "ライトレッド", "ピュアレッド", "レッド", "イタリアンレッド",
+    "オレンジ", "イエロー", "デイジー", "マスタード",
+    "ライトグリーン", "グリーン", "ブライトグリーン", "ミントグリーン", "エメラルドグリーン",
+    "ライトブルー", "シーブルー", "ブルー", "ミディアムブルー", "ロイヤルブルー",
+    "ライトパープル", "ラベンダー", "パープル",
+    "ミルクティー", "ホワイト",
 ];
+
+// 白文字にする色。ここにない新しい色は明るさから自動で判定する。
+const DARK_COLORS = [
+    "パープル", "ロイヤルブルー", "ブルー", "ミディアムブルー",
+    "ピュアレッド", "ホットピンク", "ライトレッド", "レッド", "イタリアンレッド",
+    "オレンジ", "ラベンダー", "エメラルドグリーン", "グリーン", "ブライトグリーン", "ミントグリーン",
+];
+
+function hexToRgb(code){
+    const n = parseInt(code.slice(1), 16);
+    return [(n >> 16) & 255, (n >> 8) & 255, n & 255];
+}
+
+function hue(code){
+    const [r, g, b] = hexToRgb(code).map(v => v / 255);
+    const max = Math.max(r, g, b), min = Math.min(r, g, b), d = max - min;
+    if(d === 0) return 999; // 白・グレーは最後
+    let h = max === r ? ((g - b) / d) % 6 : max === g ? (b - r) / d + 2 : (r - g) / d + 4;
+    return (h * 60 + 360) % 360;
+}
+
+// ホワイトなど、白背景だと見えにくい明るい色
+function isVeryLight(code){
+    const [r, g, b] = hexToRgb(code);
+    return (0.299 * r + 0.587 * g + 0.114 * b) > 235;
+}
+
+function isDarkColor(color){
+    if(DARK_COLORS.includes(color.name)) return true;
+    const [r, g, b] = hexToRgb(color.code);
+    return (0.299 * r + 0.587 * g + 0.114 * b) < 150;
+}
+
+// 全メンバーのカラーから回答ボタンを作る。
+// 同じカラー名でメンバーごとにコードが違う場合は、一番多いコードをボタン色にする。
+function buildColors(groupList){
+    const counts = {};
+    groupList.forEach(g => g.members.forEach(m => {
+        if(!m.code || m.color === "わからない") return;
+        counts[m.color] ??= {};
+        counts[m.color][m.code] = (counts[m.color][m.code] ?? 0) + 1;
+    }));
+
+    return Object.entries(counts)
+        .map(([name, codes]) => ({
+            name,
+            code: Object.entries(codes).sort((a, b) => b[1] - a[1])[0][0],
+        }))
+        .sort((a, b) => {
+            const ia = COLOR_ORDER.indexOf(a.name), ib = COLOR_ORDER.indexOf(b.name);
+            if(ia >= 0 && ib >= 0) return ia - ib;
+            if(ia >= 0) return -1;
+            if(ib >= 0) return 1;
+            return hue(a.code) - hue(b.code);
+        });
+}
+
+// グループ写真の周りに単色の余白がある場合 (公式サイトの画像によってはある)、
+// 余白を切り取り、空いた部分は写真の背景色 (端の色の中央値) で埋める
+function trimImagePadding(img){
+    if(img.dataset.trimmed) return;
+    img.dataset.trimmed = "1";
+
+    const w = img.naturalWidth, h = img.naturalHeight;
+    if(!w || !h) return;
+    const canvas = document.createElement("canvas");
+    canvas.width = w;
+    canvas.height = h;
+    const ctx = canvas.getContext("2d", {willReadFrequently: true});
+    ctx.drawImage(img, 0, 0);
+    let data;
+    try{ data = ctx.getImageData(0, 0, w, h).data; }catch{ return; }
+
+    const px = (x, y) => { const i = (y * w + x) * 4; return [data[i], data[i + 1], data[i + 2]]; };
+    const near = (a, b) => Math.abs(a[0] - b[0]) + Math.abs(a[1] - b[1]) + Math.abs(a[2] - b[2]) <= 24;
+    const flatCol = (x, ref) => { for(let y = 0; y < h; y += 4){ if(!near(px(x, y), ref)) return false; } return true; };
+    const flatRow = (y, ref) => { for(let x = 0; x < w; x += 4){ if(!near(px(x, y), ref)) return false; } return true; };
+
+    let left = 0, right = w, top = 0, bottom = h;
+    while(left < w / 3 && flatCol(left, px(0, 0))) left++;
+    while(right > w * 2 / 3 && flatCol(right - 1, px(w - 1, 0))) right--;
+    while(top < h / 3 && flatRow(top, px(0, 0))) top++;
+    while(bottom > h * 2 / 3 && flatRow(bottom - 1, px(0, h - 1))) bottom--;
+
+    // 余白がほぼない画像はそのまま
+    if((left + (w - right)) < w * 0.01 && (top + (h - bottom)) < h * 0.01) return;
+
+    // 写真と余白の境目には中間色の線が残りやすいので、余白があった辺は少し内側まで切る
+    const shave = Math.ceil(Math.max(w, h) * 0.004);
+    if(left > 0) left += shave;
+    if(right < w) right -= shave;
+    if(top > 0) top += shave;
+    if(bottom < h) bottom -= shave;
+
+    // 写真の内側の端から背景色を拾う (左右で色が違うことがあるので別々に)
+    const inset = 2;
+    const median = samples => {
+        const ch = i => samples.map(p => p[i]).sort((a, b) => a - b)[samples.length >> 1];
+        return `rgb(${ch(0)}, ${ch(1)}, ${ch(2)})`;
+    };
+    const edgeColor = x => {
+        const samples = [];
+        for(let y = top + inset; y < bottom - inset; y += 2) samples.push(px(x, y));
+        return median(samples);
+    };
+    const leftColor = edgeColor(left + inset);
+    const rightColor = edgeColor(right - 1 - inset);
+    const bg = `linear-gradient(to right, ${leftColor} 50%, ${rightColor} 50%)`;
+
+    const out = document.createElement("canvas");
+    out.width = right - left;
+    out.height = bottom - top;
+    out.getContext("2d").drawImage(img, left, top, out.width, out.height, 0, 0, out.width, out.height);
+    img.style.background = bg;
+    img.src = out.toDataURL("image/webp", 0.92);
+}
+
+// ページの背景をグループカラー (薄い色) にし、ボタンの色もそのグループカラーにする。
+// null ならホーム画面用 (全グループの薄い色のグラデーション)
+function lightColor(primary, secondary){
+    return secondary || `color-mix(in srgb, ${primary} 18%, white)`;
+}
+
+function setPageColor(group){
+    const colors = group && groupColors[group];
+    const primary = colors?.primary || themeColor;
+    const body = document.body;
+    body.style.backgroundColor = colors
+        ? lightColor(colors.primary, colors.secondary)
+        : lightColor(themeColor, themeLight);
+    // ホーム画面ではグラデーションの層を表示し、グループ選択中はフェードアウトして単色を見せる
+    body.classList.toggle("home-bg", !colors);
+    body.style.setProperty("--theme", primary);
+    body.style.setProperty("--theme-on", isDarkColor({name: "", code: primary}) ? "white" : "black");
+}
+
+function renderGroupCards(groupList){
+    const carousel = document.getElementById("groupCarousel");
+    carousel.innerHTML = "";
+
+    groupList.forEach(g => {
+        const card = document.createElement("div");
+        card.className = "group-card";
+        card.onclick = () => selectGroup(g.id);
+
+        if(g.colors?.primary){
+            card.style.setProperty("--group-color", g.colors.primary);
+        }
+
+        // PC でカードにマウスを乗せると、背景がそのグループカラーになる
+        card.addEventListener("pointerenter", e => {
+            if(e.pointerType === "mouse") setPageColor(g.id);
+        });
+        card.addEventListener("pointerleave", e => {
+            if(e.pointerType === "mouse" && !selectedGroup) setPageColor(null);
+        });
+
+        if(g.image){
+            const img = document.createElement("img");
+            img.alt = g.name;
+            img.addEventListener("load", () => trimImagePadding(img));
+            img.src = g.image;
+            card.appendChild(img);
+        }
+
+        const title = document.createElement("h2");
+        title.textContent = g.name;
+        card.appendChild(title);
+
+        carousel.appendChild(card);
+    });
+}
+
+async function loadData(){
+    try{
+        const res = await fetch("data/members.json", {cache: "no-cache"});
+        if(!res.ok) throw new Error(res.status);
+        const data = await res.json();
+
+        themeColor = data.theme?.primary || themeColor;
+        themeLight = data.theme?.secondary || null;
+        setPageColor(null);
+
+        data.groups.forEach(g => {
+            groups[g.id] = g.members;
+            groupNames[g.id] = g.name;
+            groupColors[g.id] = g.colors;
+        });
+
+        // ホーム画面の背景: 全グループの薄い色を並べたグラデーション
+        const stops = data.groups
+            .filter(g => g.colors?.primary)
+            .map(g => lightColor(g.colors.primary, g.colors.secondary));
+        if(stops.length >= 2){
+            document.body.style.setProperty("--home-gradient", `linear-gradient(120deg, ${stops.join(", ")})`);
+        }
+        colors = buildColors(data.groups);
+        renderGroupCards(data.groups);
+    }catch(e){
+        console.error(e);
+        document.getElementById("groupCarousel").textContent =
+            "メンバー情報を読み込めませんでした。時間をおいて再読み込みしてください。";
+    }
+}
+
+loadData();
+
+function shuffle(array){
+    for(let i = array.length - 1; i > 0; i--){
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+    }
+    return array;
+}
+
+// アー写を先に読み込んでおき、切り替え時に表示が遅れないようにする
+const preloadedImages = new Map();
+function preloadImages(urls){
+    urls.forEach(url => {
+        if(!url || preloadedImages.has(url)) return;
+        const img = new Image();
+        img.decoding = "async";
+        img.src = url;
+        preloadedImages.set(url, img);
+    });
+}
 
 let selectedGroup;
 let questions = [];
@@ -557,6 +264,7 @@ function showScreen(id){
 function selectGroup(group){
 
     selectedGroup = group;
+    setPageColor(group);
 
     let count =
         groups[group].length;
@@ -568,6 +276,8 @@ function selectGroup(group){
         .textContent =
         `全${count}問`;
 
+    preloadImages(groups[group].map(m => m.image));
+
     showScreen("startScreen");
     startCarousel();
 }
@@ -575,11 +285,7 @@ function selectGroup(group){
 function startQuiz(){
     clearInterval(carouselTimer);
     questions =
-        [...groups[selectedGroup]];
-
-    questions.sort(
-        ()=>Math.random()-0.5
-    );
+        shuffle([...groups[selectedGroup]]);
 
     currentIndex = 0;
     score = 0;
@@ -595,6 +301,9 @@ function startQuiz(){
 
     showQuestion();
 }
+
+// この時間以上押し続けたらボタンを沈める (ミリ秒)
+const HOLD_MS = 120;
 
 function createColorButtons(){
 
@@ -614,30 +323,36 @@ function createColorButtons(){
 
         btn.style.backgroundColor =
             color.code;
+        btn.style.setProperty("--c", color.code);
+        btn.dataset.color = color.name;
 
-        const darkColors = [
-            "パープル",
-            "ロイヤルブルー",
-            "ブルー",
-            "ミディアムブルー",
-            "ピュアレッド",
-            "ホットピンク",
-            "ライトレッド",
-            "レッド",
-            "イタリアンレッド",
-            "オレンジ",
-            "ラベンダー",
-            "エメラルドグリーン",
-            "グリーン",
-            "ブライトグリーン",
-            "ミントグリーン",
-        ];
-
-        if(darkColors.includes(color.name)){
+        if(isDarkColor(color)){
             btn.style.color = "white";
         }else{
             btn.style.color = "black";
         }
+
+        if(isVeryLight(color.code)){
+            btn.classList.add("light-color");
+        }
+
+        // 長押ししたときだけ沈める (短いクリックは沈まずにそのまま正解・不正解の表示へ)
+        let holdTimer = null;
+        btn.addEventListener("pointerdown", () => {
+            clearTimeout(holdTimer);
+            holdTimer = setTimeout(() => btn.classList.add("is-holding"), HOLD_MS);
+        });
+        btn.addEventListener("pointerup", () => {
+            clearTimeout(holdTimer);
+            // click の処理 (markAnswer) が沈んでいたかを見てから戻す
+            setTimeout(() => btn.classList.remove("is-holding"), 0);
+        });
+        ["pointerleave", "pointercancel"].forEach(type =>
+            btn.addEventListener(type, () => {
+                clearTimeout(holdTimer);
+                btn.classList.remove("is-holding");
+            })
+        );
 
         btn.onclick = () =>
             answer(color.name);
@@ -668,6 +383,22 @@ function showQuestion(){
 
 let canAnswer = true;
 
+// 回答後: 正解のボタンを光らせ、間違えたボタンを揺らす
+function markAnswer(selected, correct){
+    document.querySelectorAll(".color-btn").forEach(btn => {
+        if(btn.dataset.color === correct){
+            btn.classList.add("is-correct");
+        }else if(btn.dataset.color === selected){
+            btn.classList.add("is-wrong");
+        }
+        if(btn.dataset.color === selected){
+            // 長押しで沈んでいたら沈んだ位置から、短いクリックならその場からアニメーションする
+            btn.classList.add(btn.classList.contains("is-holding") ? "is-pressed" : "is-tapped");
+            btn.classList.remove("is-holding");
+        }
+    });
+}
+
 function answer(selected){
     if(!canAnswer) return;
 
@@ -685,9 +416,9 @@ function answer(selected){
 
         showOverlay(
             `⭕ 正解<br>${correct}`,
-            true,
-            correct
+            q.code
         );
+        markAnswer(selected, correct);
 
     }else{
 
@@ -699,9 +430,9 @@ function answer(selected){
 
         showOverlay(
             `❌ 不正解<br>正解：${correct}`,
-            false,
-            correct
+            q.code
         );
+        markAnswer(selected, correct);
     }
 
     setTimeout(nextQuestion,1000);
@@ -720,8 +451,7 @@ function skipQuestion(){
 
         showOverlay(
             "⭕ 正解<br>メンバーカラー未発表",
-            true,
-            "わからない"
+            null
         );
 
     }else{
@@ -734,9 +464,9 @@ function skipQuestion(){
 
         showOverlay(
             `正解：${q.color}`,
-            false,
-            q.color
+            q.code
         );
+        markAnswer(null, q.color);
     }
 
     setTimeout(nextQuestion,1000);
@@ -763,6 +493,7 @@ function nextQuestion(){
         .forEach(btn=>{
 
             btn.disabled = false;
+            btn.classList.remove("is-correct", "is-wrong", "is-pressed", "is-tapped", "is-holding");
 
         });
 
@@ -774,54 +505,22 @@ function nextQuestion(){
         .disabled = false;
 }
 
-function showOverlay(text,isCorrect,colorName){
+// code: そのメンバーのカラーコード (未発表なら null → 黒枠)
+function showOverlay(text,code){
 
     const overlay =
         document.getElementById("overlay");
 
     overlay.innerHTML = text;
 
-    overlay.className = "";
+    overlay.className = "show";
 
-    overlay.classList.add("show");
+    overlay.style.border =
+        `6px solid ${code || "black"}`;
 
-    // 最初に背景をリセット
-    overlay.style.background = "white";
-
-    const colorData =
-        colors.find(
-            c => c.name === colorName
-        );
-
-    if(isCorrect){
-
-        if(colorName === "わからない"){
-
-            overlay.style.border =
-                "6px solid black";
-
-        }else if(colorData){
-
-            overlay.style.border =
-                `6px solid ${colorData.code}`;
-
-            // overlay.style.backgroundColor =
-            //     colorData.code;
-            // overlay.style.opacity = "0.8";
-
-        }else{
-
-            overlay.style.border =
-                "6px solid black";
-        }
-
-    }else{
-
-        // overlay.style.border =
-        //     "6px solid #005eb8";
-        overlay.style.border =
-                `6px solid ${colorData.code}`;
-
+    // ホワイトなどは白背景に溶けるので、枠の内側と外側にグレーの線を付ける
+    if(code && isVeryLight(code)){
+        overlay.classList.add("light-border");
     }
 
     document
@@ -875,6 +574,9 @@ function showResult(){
 
 function goHome(){
 
+    clearInterval(carouselTimer);
+    selectedGroup = null;
+    setPageColor(null);
     showScreen("homeScreen");
 }
 
@@ -891,6 +593,9 @@ function updateCarousel(){
     img.style.opacity = 0;
 
     setTimeout(()=>{
+
+        // ホームに戻った後なら何もしない
+        if(!selectedGroup) return;
 
         const members =
             groups[selectedGroup];
@@ -909,22 +614,6 @@ function updateCarousel(){
 
     },200);
 }
-
-// nextBtn.onclick=()=>{
-
-//     carouselIndex++;
-
-//     if(
-//         carouselIndex >=
-//         groups[selectedGroup].length
-//     ){
-//         carouselIndex=0;
-//     }
-
-//     updateCarousel();
-// };
-
-
 
 function startCarousel(){
 

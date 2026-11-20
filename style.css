@@ -3,7 +3,31 @@ body{
     font-family:sans-serif;
     text-align:center;
     background:#f5f5f5;
+    transition:background-color .4s;
+
+    /* ボタンに使うテーマ色 (script.js の setPageColor がグループカラーに切り替える) */
+    --theme:#0080cb;
+    --theme-on:white;
+    --theme-text:color-mix(in srgb, var(--theme) 65%, black);
+    --theme-dark:color-mix(in srgb, var(--theme) 70%, black);
 }
+
+/* ホーム画面の背景: 全グループの薄い色のグラデーション (script.js が --home-gradient を設定)。
+   カードにマウスを乗せたりグループを選んだりすると、フェードアウトしてグループの単色が見える */
+body::before{
+    content:"";
+    position:fixed;
+    inset:0;
+    z-index:-1;
+    background:var(--home-gradient, transparent);
+    opacity:0;
+    transition:opacity .4s;
+    pointer-events:none;
+}
+body.home-bg::before{
+    opacity:1;
+}
+
 
 .screen{
     padding:1px 10px 10px 10px;
@@ -11,12 +35,6 @@ body{
 
 .hidden{
     display:none;
-}
-
-.group-list{
-    display:flex;
-    flex-direction:column;
-    gap:10px;
 }
 
 button{
@@ -39,41 +57,10 @@ button{
     margin-bottom:4px;
 }
 
-/* #colorGrid{
-    display:grid;
-    grid-template-columns:repeat(5,1fr);
-    gap:4px;
-    margin-top:10px;
-} */
-
-/* .color-btn{
-    height:70px;
-
-    border:none;
-    border-radius:16px;
-
-    background:white;
-
-    box-shadow:
-        0 2px 8px rgba(0,0,0,.12);
-
-    transition:.15s;
-
-    cursor:pointer;
-
-    display:flex;
-    flex-direction:column;
-    justify-content:center;
-    align-items:center;
-
-    font-size:13px;
-    font-weight:bold;
-} */
-
 #colorGrid{
     display:grid;
     grid-template-columns:repeat(8,1fr);
-    gap:3px;
+    gap:7px 4px;
     margin-top:8px;
 }
 @media (max-width:768px){
@@ -91,6 +78,11 @@ button{
 
 }
 .color-btn{
+    --c:#ccc;                                         /* ボタンの色 (script.js が設定) */
+    --c-dark:color-mix(in srgb, var(--c) 72%, black); /* 立体感の影 */
+    --inset:0 0 0 0 transparent;
+    --shadow-h:3px;                                   /* 立体感の影の長さ */
+
     height:40px;
 
     padding:2px;
@@ -102,23 +94,95 @@ button{
     font-weight:bold;
 
     overflow:hidden;
+
+    box-shadow:inset var(--inset), 0 var(--shadow-h) 0 var(--c-dark);
+    transition:transform .12s, box-shadow .12s;
 }
-.color-btn:hover{
-    transform:translateY(-2px);
+
+/* マウスを乗せると少し浮いて、その色で光る */
+@media (hover:hover){
+    .color-btn:hover{
+        transform:translateY(-2px);
+        box-shadow:
+            inset var(--inset),
+            0 calc(var(--shadow-h) + 2px) 0 var(--c-dark),
+            0 6px 16px color-mix(in srgb, var(--c) 60%, transparent);
+    }
 }
 
-.color-btn:active{
-    transform:scale(.95);
+/* 長押しすると沈む (is-holding は script.js が付ける) */
+.color-btn.is-holding{
+    transform:translateY(var(--shadow-h));
+    box-shadow:inset var(--inset), 0 0 0 var(--c-dark);
 }
-.sample{
-    width:28px;
-    height:28px;
 
-    border-radius:50%;
+/* ホワイトなど明るい色のボタンは背景に溶けないよう縁取り */
+.color-btn.light-color{
+    --inset:0 0 0 1px #c8c8c8;
+    --c-dark:#b5b5b5;
+}
 
-    margin-bottom:6px;
+/* 回答後: 正解のボタンを光らせ、間違えたボタンを揺らす
 
-    border:2px solid rgba(0,0,0,.15);
+   動きが途切れないよう、ボタンの状態に合わせて位置を引き継ぐ
+   --from-y: アニメーションの開始位置 / --rest-y: アニメーション中と終了後の高さ
+   - 長押しで沈んでいた : 沈んだ位置 (影の長さ分だけ下) から始まり、元の高さに戻る
+   - 短いクリック (PC)  : マウスを乗せて浮いた位置 (上に2px) のまま動く
+   - 短いタップ (スマホ) と 押していない正解ボタン : その場で動く
+   影の長さも高さに合わせる (浮いている分だけ影を長く) */
+.color-btn.is-correct,
+.color-btn.is-wrong{
+    --from-y:0px;
+    --rest-y:0px;
+    animation-fill-mode:forwards;
+}
+.color-btn.is-pressed{
+    --from-y:var(--shadow-h);
+    --rest-y:0px;
+}
+@media (hover:hover){
+    .color-btn.is-tapped{
+        --from-y:-2px;
+        --rest-y:-2px;
+    }
+}
+
+.color-btn.is-correct{
+    position:relative;
+    z-index:1;
+    overflow:visible;
+    animation-name:correct-pulse;
+    animation-duration:1s;
+    animation-timing-function:ease-out;
+    box-shadow:
+        inset var(--inset),
+        0 calc(var(--shadow-h) - var(--rest-y)) 0 var(--c-dark),
+        0 0 0 4px white,
+        0 0 0 7px var(--c),
+        0 0 22px 6px color-mix(in srgb, var(--c) 70%, transparent);
+}
+.color-btn.is-wrong{
+    animation-name:wrong-shake;
+    animation-duration:.45s;
+    animation-timing-function:ease-out;
+    opacity:.55;
+    box-shadow:inset var(--inset), 0 calc(var(--shadow-h) - var(--rest-y)) 0 var(--c-dark);
+}
+
+@keyframes correct-pulse{
+    0%{ transform:translateY(var(--from-y)) scale(1); }
+    25%{ transform:translateY(var(--rest-y)) scale(1.08); }
+    50%{ transform:translateY(var(--rest-y)) scale(1); }
+    75%{ transform:translateY(var(--rest-y)) scale(1.08); }
+    100%{ transform:translateY(var(--rest-y)) scale(1); }
+}
+@keyframes wrong-shake{
+    0%{ transform:translate(0, var(--from-y)); }
+    20%{ transform:translate(-6px, var(--rest-y)); }
+    40%{ transform:translate(6px, var(--rest-y)); }
+    60%{ transform:translate(-4px, var(--rest-y)); }
+    80%{ transform:translate(4px, var(--rest-y)); }
+    100%{ transform:translate(0, var(--rest-y)); }
 }
 
 #overlay{
@@ -155,12 +219,12 @@ button{
     transform:translate(-50%,-50%) scale(1);
 }
 
-/* #overlay.correct{
-    border:5px solid #00b140;
-} */
-
-#overlay.wrong{
-    border:5px solid #005eb8;
+/* ホワイトなど明るい色の枠: 内側と外側にグレーの線 */
+#overlay.light-border{
+    box-shadow:
+        0 0 0 1px #c8c8c8,
+        inset 0 0 0 1px #c8c8c8,
+        0 10px 30px rgba(0,0,0,.3);
 }
 
 #overlay.hidden{
@@ -200,7 +264,6 @@ button{
 
     transition:.2s;
     gap:15px;
-    /* display:flex; */
     overflow-x:auto;
     scrollbar-width:none;
 }
@@ -216,10 +279,21 @@ button{
 
     width:100%;
 
-    height:180px;
+    aspect-ratio:3 / 2;
 
-    object-fit:cover;
+    object-fit:contain;
 
+    display:block;
+
+    background:#eee;
+
+}
+
+/* マウスを乗せたカードはグループカラーで縁取り */
+.group-card:hover{
+    box-shadow:
+        0 0 0 3px var(--group-color, transparent),
+        0 8px 20px rgba(0,0,0,.18);
 }
 .group-card h2{
 
@@ -250,30 +324,19 @@ button{
     transition:opacity .5s;
 }
 
-.color-btn:disabled{
+.color-btn:disabled,
+.menu-btn:disabled{
     pointer-events:none;
-    /* opacity:0.4; */
-    transform:none !important;
-    cursor:not-allowed;
 }
-#skipBtn:disabled{
-    pointer-events:none;
-    opacity:1 !important;
-    color:black !important;
-    background:white !important;
-    filter:none !important;
-}
-#homeBtn:disabled{
-    pointer-events:none;
-    opacity:1 !important;
-    color:black !important;
-    background:white !important;
-    filter:none !important;
-}
+
+/* メニューボタン: グループカラーの枠線 (スタート・もう一度挑戦はグループカラーで塗る) */
 .menu-btn{
     background:white;
+    color:var(--theme-text);
 
-    border:2px solid black;
+    border:2px solid var(--theme);
+
+    box-shadow:0 3px 0 var(--theme);
 
     border-radius:15px;
 
@@ -289,12 +352,27 @@ button{
     margin-top: 9px;
 }
 
-.menu-btn:hover{
-    transform:translateY(-2px);
+.menu-btn.primary{
+    background:var(--theme);
+    color:var(--theme-on);
+    border-color:var(--theme);
+    box-shadow:0 4px 0 var(--theme-dark);
 }
 
-.menu-btn:active{
-    transform:scale(.97);
+@media (hover:hover){
+    .menu-btn:hover{
+        transform:translateY(-2px);
+        box-shadow:0 5px 0 var(--theme), 0 6px 14px color-mix(in srgb, var(--theme) 40%, transparent);
+    }
+    .menu-btn.primary:hover{
+        box-shadow:0 6px 0 var(--theme-dark), 0 8px 18px color-mix(in srgb, var(--theme) 50%, transparent);
+    }
+}
+
+.menu-btn:active,
+.menu-btn.primary:active{
+    transform:translateY(3px);
+    box-shadow:0 0 0 transparent;
 }
 
 #memberName{
@@ -303,3 +381,131 @@ button{
     font-size: 22px;
 }
 
+/* ===== PC (幅1024px以上): 画面サイズに合わせて大きく表示 ===== */
+@media (min-width:1024px){
+
+    .screen{
+        max-width:1800px;
+        margin:0 auto;
+        padding:0 32px 40px;
+    }
+
+    #homeScreen h1{
+        font-size:clamp(32px, 3vw, 44px);
+        margin:40px 0 8px;
+    }
+
+    /* ホーム: 横スクロールをやめて折り返し、中央にそろえる */
+    #groupCarousel{
+        flex-wrap:wrap;
+        justify-content:center;
+        overflow:visible;
+        gap:28px;
+        padding:32px 0;
+    }
+    .group-card{
+        flex:0 1 clamp(300px, 21vw, 420px);
+        min-width:0;
+    }
+    .group-card h2{
+        font-size:clamp(20px, 1.3vw, 26px);
+        margin:18px 15px;
+    }
+
+    /* スタート画面 */
+    #groupTitle{
+        font-size:36px;
+        margin:32px 0 0;
+    }
+    #memberCarousel{
+        width:auto;
+    }
+    #carouselImage{
+        width:clamp(220px, 45vh, 520px);
+        height:clamp(220px, 45vh, 520px);
+    }
+    #carouselName{
+        font-size:clamp(22px, 2.6vh, 32px);
+        font-weight:bold;
+        margin-top:12px;
+    }
+    #questionCount{
+        font-size:clamp(18px, 2vh, 26px);
+    }
+    .menu-btn{
+        font-size:clamp(16px, 1.8vh, 22px);
+        padding:clamp(10px, 1.2vh, 16px) clamp(28px, 3vh, 44px);
+        margin:16px 6px 0;
+        border-radius:18px;
+    }
+
+    /* クイズ画面 */
+    #progress{
+        font-size:clamp(18px, 2vh, 28px);
+        margin:16px 0 8px;
+    }
+    #memberImage{
+        width:clamp(160px, 36vh, 480px);
+        height:clamp(160px, 36vh, 480px);
+        border-radius:28px;
+    }
+    #memberName{
+        font-size:clamp(26px, 3.4vh, 44px);
+        margin:8px 0 16px;
+    }
+    #colorGrid{
+        max-width:clamp(1000px, 64vw, 1600px);
+        margin:0 auto;
+        grid-template-columns:repeat(7,1fr);
+        gap:clamp(10px, 1.2vh, 16px) clamp(6px, 0.8vh, 12px);
+    }
+    .color-btn{
+        height:clamp(44px, 7vh, 96px);
+        --shadow-h:4px;
+        font-size:clamp(14px, 1.7vh, 22px);
+        white-space:nowrap;
+        border-radius:12px;
+    }
+
+    /* 正解・不正解の表示 */
+    #overlay{
+        min-width:360px;
+        padding:32px 48px;
+        font-size:clamp(28px, 3.6vh, 46px);
+        border-radius:28px;
+    }
+
+    /* 結果画面 */
+    #resultScreen h2{
+        font-size:clamp(40px, 6vh, 72px);
+        margin:clamp(32px, 6vh, 72px) 0 clamp(8px, 1.5vh, 20px);
+    }
+    #scoreText{
+        font-size:clamp(28px, 4.4vh, 56px);
+        font-weight:bold;
+        line-height:1.5;
+        margin:0 0 clamp(8px, 2vh, 24px);
+    }
+    #resultScreen .menu-btn{
+        font-size:clamp(18px, 2.4vh, 30px);
+        padding:clamp(12px, 1.5vh, 20px) clamp(32px, 3.6vh, 56px);
+        border-radius:20px;
+    }
+    #mistakes{
+        display:flex;
+        flex-wrap:wrap;
+        justify-content:center;
+        gap:clamp(16px, 2vh, 28px);
+        max-width:1400px;
+        margin:clamp(24px, 4vh, 48px) auto 0;
+    }
+    #mistakes p{
+        margin:0;
+        padding:clamp(16px, 2.4vh, 32px) clamp(24px, 2.4vw, 44px);
+        background:white;
+        border-radius:20px;
+        box-shadow:0 2px 12px rgba(0,0,0,.1);
+        font-size:clamp(18px, 2.3vh, 28px);
+        line-height:1.6;
+    }
+}
