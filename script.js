@@ -271,7 +271,7 @@ let selectedGroup;
 let questions = [];
 let currentIndex = 0;
 let score = 0;
-let mistakes = [];
+let results = []; // 1問ごとの結果 (結果画面で正解・不正解に分けて表示する)
 
 function showScreen(id){
 
@@ -310,7 +310,7 @@ function startQuiz(){
 
     currentIndex = 0;
     score = 0;
-    mistakes = [];
+    results = [];
 
     canAnswer = true;
 
@@ -431,6 +431,16 @@ function answer(selected){
     const correct =
         q.color;
 
+    results.push({
+        name:q.name,
+        image:q.image,
+        isCorrect:selected === correct,
+        answer:selected,
+        answerCode:colors.find(c => c.name === selected)?.code,
+        correct:correct,
+        correctCode:q.code
+    });
+
     if(selected===correct){
 
         score++;
@@ -442,12 +452,6 @@ function answer(selected){
         markAnswer(selected, correct);
 
     }else{
-
-        mistakes.push({
-            name:q.name,
-            answer:selected,
-            correct:correct
-        });
 
         showOverlay(
             `❌ 不正解<br>正解：${correct}`,
@@ -466,6 +470,16 @@ function skipQuestion(){
 
     const q = questions[currentIndex];
 
+    results.push({
+        name:q.name,
+        image:q.image,
+        isCorrect:q.color === "わからない",
+        answer:"わからない",
+        answerCode:null,
+        correct:q.color === "わからない" ? "未発表" : q.color,
+        correctCode:q.code
+    });
+
     if(q.color === "わからない"){
 
         score++;
@@ -476,12 +490,6 @@ function skipQuestion(){
         );
 
     }else{
-
-        mistakes.push({
-            name:q.name,
-            answer:"未回答",
-            correct:q.color
-        });
 
         showOverlay(
             `正解：${q.color}`,
@@ -576,21 +584,87 @@ function showResult(){
         `;
 
     const area =
-        document.getElementById("mistakes");
+        document.getElementById("results");
 
     area.innerHTML = "";
 
-    mistakes.forEach(m=>{
+    // 不正解 → 正解 の順に、見出し付きで並べる
+    const wrong = results.filter(r => !r.isCorrect);
+    const right = results.filter(r => r.isCorrect);
+    if(wrong.length) area.appendChild(createResultGroup("❌ 不正解", wrong, "is-wrong"));
+    if(right.length) area.appendChild(createResultGroup("⭕ 正解", right, "is-correct"));
+}
 
-        area.innerHTML +=
-        `
-        <p>
-        ❌ ${m.name}<br>
-        回答:${m.answer}<br>
-        正解:${m.correct}
-        </p>
-        `;
-    });
+function createResultGroup(title, list, className){
+
+    const group = document.createElement("section");
+    group.className = "result-group " + className;
+
+    const heading = document.createElement("h3");
+    heading.textContent = title + " ";
+    const count = document.createElement("span");
+    count.className = "result-count";
+    count.textContent = `${list.length}人`;
+    heading.appendChild(count);
+    group.appendChild(heading);
+
+    const cards = document.createElement("div");
+    cards.className = "result-list";
+    list.forEach(r => cards.appendChild(createResultCard(r)));
+    group.appendChild(cards);
+
+    return group;
+}
+
+// メンバーのカード: アー写・名前・色 (正解なら正解の色、不正解なら回答した色と正解の色)
+function createResultCard(r){
+
+    const card = document.createElement("div");
+    card.className = "result-card " + (r.isCorrect ? "is-correct" : "is-wrong");
+
+    const img = document.createElement("img");
+    img.src = r.image;
+    img.alt = r.name;
+    card.appendChild(img);
+
+    const info = document.createElement("div");
+    info.className = "result-info";
+    card.appendChild(info);
+
+    const name = document.createElement("div");
+    name.className = "result-name";
+    name.textContent = r.name;
+    info.appendChild(name);
+
+    const row = (label, colorName, code, className) => {
+        const line = document.createElement("div");
+        line.className = "result-row " + className;
+
+        const tag = document.createElement("span");
+        tag.className = "result-label";
+        tag.textContent = label;
+        line.appendChild(tag);
+
+        const value = document.createElement("span");
+        value.className = "result-value";
+        if(code){
+            const swatch = document.createElement("span");
+            swatch.className = "swatch";
+            swatch.style.backgroundColor = code;
+            value.appendChild(swatch);
+        }
+        value.appendChild(document.createTextNode(colorName));
+        line.appendChild(value);
+
+        return line;
+    };
+
+    if(!r.isCorrect){
+        info.appendChild(row("回答", r.answer, r.answerCode, "is-answer"));
+    }
+    info.appendChild(row("正解", r.correct, r.correctCode, "is-right"));
+
+    return card;
 }
 
 function goHome(){

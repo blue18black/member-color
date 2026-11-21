@@ -385,6 +385,105 @@ button,
     box-shadow:0 0 0 transparent;
 }
 
+/* 結果画面: メンバーごとの結果 (スマホ: 横長の行を縦一列に並べる) */
+#results{
+    --wrong:#e5484d;
+    --right:#22a06b;
+    max-width:520px;
+    margin:16px auto 0;
+}
+.result-group{
+    margin-top:20px;
+}
+.result-group h3{
+    display:flex;
+    align-items:center;
+    gap:.4em;
+    margin:0 0 8px;
+    font-size:17px;
+    text-align:left;
+}
+.result-group.is-wrong h3{ color:var(--wrong); }
+.result-group.is-correct h3{ color:var(--right); }
+.result-count{
+    font-size:.8em;
+    padding:0 .6em;
+    border-radius:999px;
+    background:white;
+}
+.result-list{
+    display:flex;
+    flex-direction:column;
+    gap:8px;
+}
+.result-card{
+    box-sizing:border-box;
+    display:flex;
+    align-items:center;
+    gap:12px;
+    padding:8px 12px 8px 8px;
+    background:white;
+    border-radius:14px;
+    border-left:6px solid var(--wrong);
+    box-shadow:0 2px 8px rgba(0,0,0,.08);
+    text-align:left;
+    font-size:14px;
+}
+.result-card.is-correct{
+    border-left-color:var(--right);
+}
+.result-card img{
+    flex:none;
+    width:64px;
+    height:64px;
+    object-fit:cover;
+    border-radius:10px;
+}
+.result-info{
+    min-width:0;
+}
+.result-name{
+    margin-bottom:2px;
+    font-size:1.1em;
+    font-weight:bold;
+}
+.result-row{
+    display:flex;
+    align-items:center;
+    gap:.4em;
+    line-height:1.7;
+}
+.result-label{
+    flex:none;
+    font-size:.8em;
+    padding:0 .5em;
+    border-radius:999px;
+    background:#eee;
+    color:#555;
+}
+.result-row.is-right .result-label{
+    background:#222;
+    color:white;
+}
+.result-row.is-answer{
+    color:#777;
+}
+.result-row.is-right{
+    font-weight:bold;
+}
+.result-value{
+    display:inline-flex;
+    align-items:center;
+    gap:.35em;
+}
+.swatch{
+    flex:none;
+    width:.95em;
+    height:.95em;
+    border-radius:50%;
+    box-shadow:inset 0 0 0 1px rgba(0,0,0,.2);
+}
+
 #memberName{
     margin-top:1px;
     margin-bottom:11px;
@@ -501,21 +600,53 @@ button,
         padding:clamp(12px, 1.5vh, 20px) clamp(32px, 3.6vh, 56px);
         border-radius:20px;
     }
-    #mistakes{
-        display:flex;
+    /* 結果: PC では縦長のカードを折り返して並べる */
+    #results{
+        max-width:1600px;
+        margin-top:clamp(16px, 3vh, 40px);
+    }
+    .result-group{
+        margin-top:clamp(20px, 3.5vh, 44px);
+    }
+    .result-group h3{
+        justify-content:center;
+        margin-bottom:clamp(10px, 1.6vh, 20px);
+        font-size:clamp(22px, 2.8vh, 34px);
+    }
+    .result-list{
+        flex-direction:row;
         flex-wrap:wrap;
         justify-content:center;
-        gap:clamp(16px, 2vh, 28px);
-        max-width:1400px;
-        margin:clamp(24px, 4vh, 48px) auto 0;
+        gap:clamp(14px, 1.8vh, 24px);
     }
-    #mistakes p{
-        margin:0;
-        padding:clamp(16px, 2.4vh, 32px) clamp(24px, 2.4vw, 44px);
-        background:white;
-        border-radius:20px;
-        box-shadow:0 2px 12px rgba(0,0,0,.1);
-        font-size:clamp(18px, 2.3vh, 28px);
-        line-height:1.6;
+    .result-card{
+        /* 長い色名 (エメラルドグリーンなど) が1行に収まる幅を、文字の大きさ基準で確保する */
+        flex:0 1 clamp(14em, 12.5vw, 17em);
+        flex-direction:column;
+        align-items:stretch;
+        gap:0;
+        padding:clamp(10px, 1.2vh, 16px);
+        border-left:none;
+        border-top:6px solid var(--wrong);
+        border-radius:18px;
+        text-align:center;
+        font-size:clamp(14px, 1.7vh, 20px);
+    }
+    .result-card.is-correct{
+        border-top-color:var(--right);
+    }
+    .result-card img{
+        width:100%;
+        height:auto;
+        aspect-ratio:1;
+        border-radius:12px;
+    }
+    .result-name{
+        margin:.5em 0 .2em;
+    }
+    .result-row{
+        justify-content:center;
+        flex-wrap:wrap;
+        font-size:.9em;
     }
 }
