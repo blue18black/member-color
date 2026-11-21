@@ -169,7 +169,9 @@ function renderGroupCards(groupList){
         }
 
         // PC でカードにマウスを乗せると、背景がそのグループカラーになる
+        card.addEventListener("pointerdown", () => preloadGroup(g.id));
         card.addEventListener("pointerenter", e => {
+            preloadGroup(g.id);
             if(e.pointerType === "mouse") setPageColor(g.id);
         });
         card.addEventListener("pointerleave", e => {
@@ -217,6 +219,9 @@ async function loadData(){
         }
         colors = buildColors(data.groups);
         renderGroupCards(data.groups);
+
+        const idle = window.requestIdleCallback || (cb => setTimeout(cb, 500));
+        idle(() => data.groups.forEach(g => preloadImage(g.members[0]?.image, "low")));
     }catch(e){
         console.error(e);
         document.getElementById("groupCarousel").textContent =
@@ -235,15 +240,31 @@ function shuffle(array){
 }
 
 // アー写を先に読み込んでおき、切り替え時に表示が遅れないようにする
-const preloadedImages = new Map();
-function preloadImages(urls){
-    urls.forEach(url => {
-        if(!url || preloadedImages.has(url)) return;
-        const img = new Image();
-        img.decoding = "async";
-        img.src = url;
-        preloadedImages.set(url, img);
+const preloadedImages = new Map(); // url -> 読み込みが終わったら解決する Promise
+function preloadImage(url, priority = "auto"){
+    if(!url) return Promise.resolve();
+    if(preloadedImages.has(url)) return preloadedImages.get(url);
+    const img = new Image();
+    img.decoding = "async";
+    img.fetchPriority = priority;
+    const done = new Promise(resolve => {
+        img.onload = img.onerror = resolve;
     });
+    img.src = url;
+    preloadedImages.set(url, done);
+    return done;
+}
+function preloadImages(urls){
+    urls.forEach(url => preloadImage(url));
+}
+
+// グループのアー写を読み込む。1人目 (スタート画面で最初に出る人) を最優先にし、
+// 残りは1人目の読み込みが終わってから読み込む (回線を取り合って1人目が遅れないように)
+function preloadGroup(group){
+    const members = groups[group] ?? [];
+    if(members.length === 0) return;
+    preloadImage(members[0].image, "high")
+        .then(() => preloadImages(members.slice(1).map(m => m.image)));
 }
 
 let selectedGroup;
@@ -276,7 +297,7 @@ function selectGroup(group){
         .textContent =
         `全${count}問`;
 
-    preloadImages(groups[group].map(m => m.image));
+    preloadGroup(group);
 
     showScreen("startScreen");
     startCarousel();
