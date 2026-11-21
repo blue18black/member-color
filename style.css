@@ -44,6 +44,16 @@ button{
     cursor:pointer;
 }
 
+/* スマホで長押ししたときに、ボタンやカードが青く強調されたり文字が選択されたりしないようにする */
+button,
+.group-card{
+    -webkit-tap-highlight-color:transparent;
+    -webkit-touch-callout:none;
+    -webkit-user-select:none;
+    user-select:none;
+    touch-action:manipulation;
+}
+
 #memberImage{
     width:150px;
     height:150px;

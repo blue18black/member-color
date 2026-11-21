@@ -574,7 +574,9 @@ function showResult(){
 
 function goHome(){
 
-    clearInterval(carouselTimer);
+    clearCarousel();
+    // クイズ画面の写真も消しておき、次のグループで前の人が一瞬出ないようにする
+    document.getElementById("memberImage").removeAttribute("src");
     selectedGroup = null;
     setPageColor(null);
     showScreen("homeScreen");
@@ -582,37 +584,67 @@ function goHome(){
 
 let carouselIndex = 0;
 let carouselTimer = null;
+let carouselToken = 0; // 切り替えのたびに増やし、古い切り替え処理を無効にする
 
-function updateCarousel(){
+// スタート画面のメンバー写真を切り替える。
+// 新しい写真の読み込みが終わってから表示するので、前の写真 (前のグループの人) は出ない
+function updateCarousel(fade = true){
 
     const img =
         document.getElementById(
             "carouselImage"
         );
+    const token = ++carouselToken;
 
-    img.style.opacity = 0;
+    const apply = () => {
 
-    setTimeout(()=>{
+        // ホームに戻った後や、次の切り替えが始まった後なら何もしない
+        if(token !== carouselToken || !selectedGroup) return;
 
-        // ホームに戻った後なら何もしない
-        if(!selectedGroup) return;
+        const member =
+            groups[selectedGroup][carouselIndex];
 
-        const members =
-            groups[selectedGroup];
-
-        img.src =
-            members[carouselIndex].image;
+        img.src = member.image;
 
         document
             .getElementById(
                 "carouselName"
             )
             .textContent =
-            members[carouselIndex].name;
+            member.name;
 
-        img.style.opacity = 1;
+        const show = () => {
+            if(token === carouselToken) img.style.opacity = 1;
+        };
+        // 読み込み済み (先読みしてある) ならすぐ、まだなら読み込みが終わってから表示する
+        if(img.complete && img.naturalWidth > 0){
+            show();
+        }else{
+            img.addEventListener("load", show, {once: true});
+            img.addEventListener("error", show, {once: true});
+        }
+    };
 
-    },200);
+    img.style.opacity = 0;
+
+    if(fade){
+        setTimeout(apply, 200);
+    }else{
+        apply();
+    }
+}
+
+// スタート画面の写真と名前をすぐに消す (前のグループの写真が残らないように)
+function clearCarousel(){
+    carouselToken++;
+    clearInterval(carouselTimer);
+    const img = document.getElementById("carouselImage");
+    img.style.transition = "none";
+    img.style.opacity = 0;
+    img.removeAttribute("src");
+    img.offsetWidth; // ここで反映させてから、フェードの設定を戻す
+    img.style.transition = "";
+    document.getElementById("carouselName").textContent = "";
 }
 
 function startCarousel(){
@@ -620,11 +652,12 @@ function startCarousel(){
     const members =
         groups[selectedGroup];
 
+    clearCarousel();
+
     carouselIndex = 0;
 
-    updateCarousel();
-
-    clearInterval(carouselTimer);
+    // 最初の1人はフェードを待たずに、読み込みが終わりしだい表示する
+    updateCarousel(false);
 
     carouselTimer = setInterval(()=>{
 
